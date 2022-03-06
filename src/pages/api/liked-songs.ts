@@ -1,8 +1,8 @@
-import axios from "axios";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { TrackDetailResponse } from "types/lastfm/track";
-import { Song } from "types/song";
-import { spotifyApi } from "utils/spotifyApi";
+import axios from 'axios';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { TrackDetailResponse } from 'types/lastfm/track';
+import { Song } from 'types/song';
+import { spotifyApi } from 'utils/spotifyApi';
 
 const fetchTrackDetails = async (song: Song): Promise<any> => {
   const response = await axios.get<TrackDetailResponse>(
@@ -18,13 +18,12 @@ const fetchTrackDetails = async (song: Song): Promise<any> => {
     const genres = response.data.track?.toptags.tag.map((tag) => tag.name);
     const summary = response.data.track?.wiki?.summary;
     return { ...song, genres, summary };
-  } else {
-    return {
-      ...song,
-      genres: [],
-      summary: null,
-    };
   }
+  return {
+    ...song,
+    genres: [],
+    summary: null,
+  };
 };
 
 export default async function handler(
@@ -34,7 +33,7 @@ export default async function handler(
   const authToken = req.cookies?.spotifyAuth;
   spotifyApi.setAccessToken(authToken);
 
-  const data = await spotifyApi.getMySavedTracks({ offset: 0, market: "US" });
+  const data = await spotifyApi.getMySavedTracks({ offset: 0, market: 'US' });
 
   const likedSongs = data.body.items.map((likedTrack) => ({
     dateAdded: likedTrack.added_at,

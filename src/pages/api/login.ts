@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { spotifyApi } from "utils/spotifyApi";
 import { generateRandomString } from "utils/string";
 
@@ -17,6 +17,6 @@ export default function handler(
   res: NextApiResponse<any>
 ) {
   const state = generateRandomString(16);
-  var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
+  const authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
   res.redirect(authorizeURL);
 }
