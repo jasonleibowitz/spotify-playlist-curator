@@ -6,11 +6,9 @@ import { spotifyApi } from "utils/spotifyApi";
 
 const fetchTrackDetails = async (song: Song): Promise<any> => {
   const response = await axios.get<TrackDetailResponse>(
-    `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${
-      process.env.LAST_FM_API_KEY
-    }&artist=${encodeURI(song.artists)}&track=${encodeURI(
-      song.name
-    )}&format=json`
+    `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${process.env.LAST_FM_API_KEY}&artist=${encodeURI(
+      song.artists
+    )}&track=${encodeURI(song.name)}&format=json`
   );
   const hasTags = response.data.track?.toptags?.tag.length;
   if (hasTags) {
@@ -26,10 +24,7 @@ const fetchTrackDetails = async (song: Song): Promise<any> => {
   };
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<any>
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const authToken = req.cookies?.spotifyAuth;
   spotifyApi.setAccessToken(authToken);
 

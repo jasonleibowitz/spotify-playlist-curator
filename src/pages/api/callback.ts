@@ -1,10 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { spotifyApi } from "utils/spotifyApi";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<any>
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const code = req.query?.code as string;
   const data = await spotifyApi.authorizationCodeGrant(code);
   console.log(`The token expires in ${data.body?.expires_in}`);
